@@ -16,7 +16,7 @@ namespace _19169_19185_ED_Lab
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new frmForm());
         }
     }
 }

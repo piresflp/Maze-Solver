@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace _19169_19185_ED_Lab
 {
-    public partial class Form1 : Form
+    public partial class frmForm : Form
     {
-        public Form1()
+        public frmForm()
         {
             InitializeComponent();
         }
@@ -22,7 +22,7 @@ namespace _19169_19185_ED_Lab
             if(dlgArquivo.ShowDialog() == DialogResult.OK)
             {
                 Labirinto labirinto = new Labirinto(dlgArquivo.FileName); // cria um novo labirinto
-                //labirinto.Exibir(dgvLabirinto);
+                labirinto.Exibir(dgvLabirinto);
             }
         }
     }

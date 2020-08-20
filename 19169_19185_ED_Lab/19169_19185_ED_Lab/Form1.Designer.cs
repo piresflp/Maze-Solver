@@ -1,6 +1,6 @@
 ﻿namespace _19169_19185_ED_Lab
 {
-    partial class Form1
+    partial class frmForm
     {
         /// <summary>
         /// Variável de designer necessária.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmForm));
             this.dgvLabirinto = new System.Windows.Forms.DataGridView();
             this.dgvCaminhos = new System.Windows.Forms.DataGridView();
             this.lbLabirinto = new System.Windows.Forms.Label();
@@ -41,9 +42,13 @@
             // 
             // dgvLabirinto
             // 
+            this.dgvLabirinto.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvLabirinto.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvLabirinto.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvLabirinto.ColumnHeadersVisible = false;
             this.dgvLabirinto.Location = new System.Drawing.Point(12, 81);
             this.dgvLabirinto.Name = "dgvLabirinto";
+            this.dgvLabirinto.RowHeadersVisible = false;
             this.dgvLabirinto.Size = new System.Drawing.Size(350, 357);
             this.dgvLabirinto.TabIndex = 0;
             // 
@@ -100,7 +105,7 @@
             // 
             this.dlgArquivo.FileName = "openFileDialog1";
             // 
-            // Form1
+            // frmForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -111,8 +116,9 @@
             this.Controls.Add(this.lbLabirinto);
             this.Controls.Add(this.dgvCaminhos);
             this.Controls.Add(this.dgvLabirinto);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "frmForm";
+            this.Text = "Resolvedor de Labirintos";
             ((System.ComponentModel.ISupportInitialize)(this.dgvLabirinto)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCaminhos)).EndInit();
             this.ResumeLayout(false);
