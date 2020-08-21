@@ -25,5 +25,15 @@ namespace _19169_19185_ED_Lab
                 labirinto.Exibir(dgvLabirinto);
             }
         }
+
+        private void dgvLabirinto_Resize(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void btnEncontrar_Click(object sender, EventArgs e)
+        {            
+
+        }
     }
 }

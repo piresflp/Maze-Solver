@@ -8,19 +8,18 @@ namespace _19169_19185_ED_Lab
 {
     class Movimento
     {
-        private int linhaOrigem, linhaDestino, colunaOrigem, colunaDestino;
+        private int linha, coluna;
+        private static readonly int[,] direcoes = {{-1,0},{-1,1},{0,1},{1,1},{1,0},{1,-1},{0,-1},{-1,-1}};
 
-        public Movimento(int linhaOrigem, int linhaDestino, int colunaOrigem, int colunaDestino)
+        public Movimento() {} // construtor feito para acessar os possíveis movimentos
+        public Movimento(int novaLinha, int novaColuna) // construtor para alterar o movimento atual
         {
-            this.LinhaOrigem = linhaOrigem;
-            this.LinhaDestino = linhaDestino;
-            this.ColunaOrigem = colunaOrigem;
-            this.ColunaDestino = colunaDestino;
+            this.Linha = novaLinha;
+            this.Coluna = novaColuna;
         }
 
-        public int LinhaOrigem { get => linhaOrigem; set => linhaOrigem = value; }
-        public int LinhaDestino { get => linhaDestino; set => linhaDestino = value; }
-        public int ColunaOrigem { get => colunaOrigem; set => colunaOrigem = value; }
-        public int ColunaDestino { get => colunaDestino; set => colunaDestino = value; }
+        public int Linha { get => linha; set => linha = value; }
+        public int Coluna { get => coluna; set => coluna = value; }
+        public int[,] Direcoes { get => direcoes;}
     }
 }

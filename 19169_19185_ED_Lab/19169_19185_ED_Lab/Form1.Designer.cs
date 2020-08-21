@@ -46,25 +46,27 @@
             this.dgvLabirinto.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvLabirinto.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvLabirinto.ColumnHeadersVisible = false;
-            this.dgvLabirinto.Location = new System.Drawing.Point(12, 81);
+            this.dgvLabirinto.Enabled = false;
+            this.dgvLabirinto.Location = new System.Drawing.Point(12, 87);
             this.dgvLabirinto.Name = "dgvLabirinto";
             this.dgvLabirinto.RowHeadersVisible = false;
-            this.dgvLabirinto.Size = new System.Drawing.Size(350, 357);
+            this.dgvLabirinto.Size = new System.Drawing.Size(502, 403);
             this.dgvLabirinto.TabIndex = 0;
+            this.dgvLabirinto.Resize += new System.EventHandler(this.dgvLabirinto_Resize);
             // 
             // dgvCaminhos
             // 
             this.dgvCaminhos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvCaminhos.Location = new System.Drawing.Point(380, 81);
+            this.dgvCaminhos.Location = new System.Drawing.Point(520, 87);
             this.dgvCaminhos.Name = "dgvCaminhos";
-            this.dgvCaminhos.Size = new System.Drawing.Size(523, 357);
+            this.dgvCaminhos.Size = new System.Drawing.Size(523, 403);
             this.dgvCaminhos.TabIndex = 1;
             // 
             // lbLabirinto
             // 
             this.lbLabirinto.AutoSize = true;
             this.lbLabirinto.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbLabirinto.Location = new System.Drawing.Point(8, 57);
+            this.lbLabirinto.Location = new System.Drawing.Point(12, 64);
             this.lbLabirinto.Name = "lbLabirinto";
             this.lbLabirinto.Size = new System.Drawing.Size(70, 20);
             this.lbLabirinto.TabIndex = 2;
@@ -74,7 +76,7 @@
             // 
             this.lbCaminhos.AutoSize = true;
             this.lbCaminhos.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbCaminhos.Location = new System.Drawing.Point(376, 57);
+            this.lbCaminhos.Location = new System.Drawing.Point(516, 64);
             this.lbCaminhos.Name = "lbCaminhos";
             this.lbCaminhos.Size = new System.Drawing.Size(173, 20);
             this.lbCaminhos.TabIndex = 3;
@@ -83,17 +85,18 @@
             // btnEncontrar
             // 
             this.btnEncontrar.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEncontrar.Location = new System.Drawing.Point(814, 12);
+            this.btnEncontrar.Location = new System.Drawing.Point(954, 14);
             this.btnEncontrar.Name = "btnEncontrar";
             this.btnEncontrar.Size = new System.Drawing.Size(89, 63);
             this.btnEncontrar.TabIndex = 5;
             this.btnEncontrar.Text = "Encontrar caminhos";
             this.btnEncontrar.UseVisualStyleBackColor = true;
+            this.btnEncontrar.Click += new System.EventHandler(this.btnEncontrar_Click);
             // 
             // btnAbrir
             // 
             this.btnAbrir.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAbrir.Location = new System.Drawing.Point(703, 12);
+            this.btnAbrir.Location = new System.Drawing.Point(859, 14);
             this.btnAbrir.Name = "btnAbrir";
             this.btnAbrir.Size = new System.Drawing.Size(89, 63);
             this.btnAbrir.TabIndex = 6;
@@ -109,7 +112,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(915, 455);
+            this.ClientSize = new System.Drawing.Size(1055, 500);
             this.Controls.Add(this.btnAbrir);
             this.Controls.Add(this.btnEncontrar);
             this.Controls.Add(this.lbCaminhos);
