@@ -16,12 +16,12 @@ namespace _19169_19185_ED_Lab
         {
             InitializeComponent();
         }
-
+        Labirinto labirinto;
         private void btnAbrir_Click(object sender, EventArgs e)
         {            
             if(dlgArquivo.ShowDialog() == DialogResult.OK)
             {
-                Labirinto labirinto = new Labirinto(dlgArquivo.FileName); // cria um novo labirinto
+                labirinto = new Labirinto(dlgArquivo.FileName); // cria um novo labirinto
                 labirinto.Exibir(dgvLabirinto);
             }
         }
@@ -32,8 +32,8 @@ namespace _19169_19185_ED_Lab
         }
 
         private void btnEncontrar_Click(object sender, EventArgs e)
-        {            
-
+        {
+            labirinto.andar(dgvLabirinto);
         }
     }
 }

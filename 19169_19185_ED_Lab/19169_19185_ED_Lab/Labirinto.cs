@@ -12,6 +12,7 @@ namespace _19169_19185_ED_Lab
     class Labirinto
     {
         private char[,] matriz;
+        //Pilha<Movimento> movimentos;
         public Labirinto(string arquivo)
         {
             lerArquivo(arquivo);
@@ -33,9 +34,10 @@ namespace _19169_19185_ED_Lab
             }          
         }
 
-       /* private Pilha<Movimento> procurarCaminho(int[] posicaoAtual, Pilha<Movimento> movimentos, DataGridView dgv)
+        private int[] procurarCaminho(int[] posicaoAtual, /*Pilha<Movimento> movimentos,*/ DataGridView dgv)
         {
             Movimento direcoes = new Movimento();
+            bool moveu = false;
             for(int i = 0; i < direcoes.Direcoes.Length; i++)
             {
                 int possivelLinha = posicaoAtual[0] + direcoes.Direcoes[i, 0];
@@ -44,17 +46,51 @@ namespace _19169_19185_ED_Lab
 
                 if(podeMover(dgv,possivelMovimento))
                 {
-
+                    //movimentos.adiciona(posicaoAtual);
+                    dgv.Rows[posicaoAtual[0]].Cells[posicaoAtual[1]].Style.BackColor = Color.LightGreen; //Pinta a posicao anterior
+                    posicaoAtual = possivelMovimento;
+                    dgv.Rows[posicaoAtual[0]].Cells[posicaoAtual[1]].Style.BackColor = Color.Green; //Pinta a posicao atual
+                    moveu = true;
+                    break;
                 }
             }
-        }*/
+            if (!moveu)
+            {
+                if (posicaoAtual[0] == 1 && posicaoAtual[1] == 1)
+                    throw new Exception("Sem saida");
+
+                //posicaoAtual = movimentos.get();
+
+                //procurarCaminho(posicaoAtual, dgv);
+            }
+            return posicaoAtual;
+        }
+
+        public void andar(DataGridView dgv)
+        {
+            int[] posicaoAtual = { 1, 1 };
+            while (matriz[posicaoAtual[0], posicaoAtual[1]] != 'S')
+            {
+                posicaoAtual = procurarCaminho(posicaoAtual, dgv);
+                MessageBox.Show("foi");
+            }
+        }
 
         public void Exibir(DataGridView dgv)
         {
             definirDgv(dgv);
             for (int i = 0; i < matriz.GetLength(0); i++) 
                 for (int j = 0; j < matriz.GetLength(1); j++)
+                {
                     dgv.Rows[i].Cells[j].Value = matriz[i, j]; // carrega cada linha e coluna do DataGridView de acordo com a matriz
+                    if(matriz[i, j] == '#')
+                        dgv.Rows[i].Cells[j].Style.BackColor = Color.Gray; //Pinta as paredes
+                    if (matriz[i, j] == 'I')
+                        dgv.Rows[i].Cells[j].Style.BackColor = Color.Green; //Pinta a posicao atual
+                    if (matriz[i, j] == 'S')
+                        dgv.Rows[i].Cells[j].Style.BackColor = Color.Goldenrod; //Pinta a saida
+                }
+                   
         }
 
 
@@ -63,14 +99,15 @@ namespace _19169_19185_ED_Lab
             int possivelLinha = possivelPosicao[0];
             int possivelColuna = possivelPosicao[1];
             if (matriz[possivelLinha, possivelColuna] == '#')
-            {
-                dgv.Rows[possivelLinha].Cells[possivelColuna].Style.BackColor = Color.Gray;
                 return false;
-            }               
+            
+            if(dgv.Rows[possivelLinha].Cells[possivelColuna].Style.BackColor == Color.LightGreen)               //verifica se já foi nesse espaço
+                return false;                                       //e retorna false
+             
             return true;
         }
 
-        private void definirDgv(DataGridView dgv)
+        private void definirDgv( DataGridView dgv)
         {
             dgv.RowCount = matriz.GetLength(0); // define o número de linhas do DataGridView igual ao lido pela matriz
             dgv.ColumnCount = matriz.GetLength(1); // define o número de colunas do DataGridView igual ao lido pela matriz

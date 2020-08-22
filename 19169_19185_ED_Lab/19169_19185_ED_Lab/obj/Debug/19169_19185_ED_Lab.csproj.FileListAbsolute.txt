@@ -8,3 +8,13 @@ C:\Users\Felipe\Desktop\maze_solver\19169_19185_ED_Lab\19169_19185_ED_Lab\obj\De
 C:\Users\Felipe\Desktop\maze_solver\19169_19185_ED_Lab\19169_19185_ED_Lab\obj\Debug\19169_19185_ED_Lab.exe
 C:\Users\Felipe\Desktop\maze_solver\19169_19185_ED_Lab\19169_19185_ED_Lab\obj\Debug\19169_19185_ED_Lab.pdb
 C:\Users\Felipe\Desktop\maze_solver\19169_19185_ED_Lab\19169_19185_ED_Lab\obj\Debug\_19169_19185_ED_Lab.frmForm.resources
+C:\Users\marce\cotuca\Ed2\maze_solver\19169_19185_ED_Lab\19169_19185_ED_Lab\bin\Debug\19169_19185_ED_Lab.exe.config
+C:\Users\marce\cotuca\Ed2\maze_solver\19169_19185_ED_Lab\19169_19185_ED_Lab\bin\Debug\19169_19185_ED_Lab.exe
+C:\Users\marce\cotuca\Ed2\maze_solver\19169_19185_ED_Lab\19169_19185_ED_Lab\bin\Debug\19169_19185_ED_Lab.pdb
+C:\Users\marce\cotuca\Ed2\maze_solver\19169_19185_ED_Lab\19169_19185_ED_Lab\obj\Debug\19169_19185_ED_Lab.csprojAssemblyReference.cache
+C:\Users\marce\cotuca\Ed2\maze_solver\19169_19185_ED_Lab\19169_19185_ED_Lab\obj\Debug\_19169_19185_ED_Lab.frmForm.resources
+C:\Users\marce\cotuca\Ed2\maze_solver\19169_19185_ED_Lab\19169_19185_ED_Lab\obj\Debug\_19169_19185_ED_Lab.Properties.Resources.resources
+C:\Users\marce\cotuca\Ed2\maze_solver\19169_19185_ED_Lab\19169_19185_ED_Lab\obj\Debug\19169_19185_ED_Lab.csproj.GenerateResource.cache
+C:\Users\marce\cotuca\Ed2\maze_solver\19169_19185_ED_Lab\19169_19185_ED_Lab\obj\Debug\19169_19185_ED_Lab.csproj.CoreCompileInputs.cache
+C:\Users\marce\cotuca\Ed2\maze_solver\19169_19185_ED_Lab\19169_19185_ED_Lab\obj\Debug\19169_19185_ED_Lab.exe
+C:\Users\marce\cotuca\Ed2\maze_solver\19169_19185_ED_Lab\19169_19185_ED_Lab\obj\Debug\19169_19185_ED_Lab.pdb
