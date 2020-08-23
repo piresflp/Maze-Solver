@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace _19169_19185_ED_Lab
 {
-    class Movimento
+    class Movimento : IComparable<Movimento>
     {
         private int linha, coluna;
         private static readonly int[,] direcoes = {{-1,0},{-1,1},{0,1},{1,1},{1,0},{1,-1},{0,-1},{-1,-1}};
@@ -21,5 +21,15 @@ namespace _19169_19185_ED_Lab
         public int Linha { get => linha; set => linha = value; }
         public int Coluna { get => coluna; set => coluna = value; }
         public int[,] Direcoes { get => direcoes;}
+
+        public override String ToString()
+        {
+            return Linha + ", " + Coluna;
+        }
+
+        public int CompareTo(Movimento outro)   // para compatibilizar com ListaSimples e NoLista
+        {
+            return 0;
+        }
     }
 }

@@ -53,11 +53,15 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Labirinto.cs" />
-    <Compile Include="ListaSimplesDesordenada.cs" />
+    <Compile Include="ListaSimples.cs" />
     <Compile Include="Movimento.cs" />
-    <Compile Include="Pilha.cs" />
+    <Compile Include="NoLista.cs" />
+    <Compile Include="PilhaCheiaException.cs" />
+    <Compile Include="PilhaLista.cs" />
+    <Compile Include="PilhaVaziaException.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Stack.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

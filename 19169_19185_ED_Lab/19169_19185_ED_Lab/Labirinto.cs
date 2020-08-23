@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -12,10 +13,11 @@ namespace _19169_19185_ED_Lab
     class Labirinto
     {
         private char[,] matriz;
-        //Pilha<Movimento> movimentos;
+        PilhaLista<Movimento> movimentos;
         public Labirinto(string arquivo)
         {
             lerArquivo(arquivo);
+            movimentos = new PilhaLista<Movimento>();
         }
 
         private void lerArquivo(string arquivo)
@@ -34,7 +36,7 @@ namespace _19169_19185_ED_Lab
             }          
         }
 
-        private int[] procurarCaminho(int[] posicaoAtual, /*Pilha<Movimento> movimentos,*/ DataGridView dgv)
+        private int[] procurarCaminho(int[] posicaoAtual, DataGridView dgv)
         {
             Movimento direcoes = new Movimento();
             bool moveu = false;
@@ -46,22 +48,22 @@ namespace _19169_19185_ED_Lab
 
                 if(podeMover(dgv,possivelMovimento))
                 {
-                    //movimentos.adiciona(posicaoAtual);
                     dgv.Rows[posicaoAtual[0]].Cells[posicaoAtual[1]].Style.BackColor = Color.LightGreen; //Pinta a posicao anterior
                     posicaoAtual = possivelMovimento;
                     dgv.Rows[posicaoAtual[0]].Cells[posicaoAtual[1]].Style.BackColor = Color.Green; //Pinta a posicao atual
                     moveu = true;
+                    movimentos.Empilhar(new Movimento(possivelLinha, possivelColuna));
                     break;
                 }
             }
             if (!moveu)
             {
                 if (posicaoAtual[0] == 1 && posicaoAtual[1] == 1)
-                    throw new Exception("Sem saida");
+                    throw new Exception("Sem saída");
 
-                //posicaoAtual = movimentos.get();
-
-                //procurarCaminho(posicaoAtual, dgv);
+                //Movimento ultimoMovimento = movimentos.OTopo();
+                //posicaoAtual = { ultimoMovimento.Linha, ultimoMovimento.Coluna };
+                procurarCaminho(posicaoAtual, dgv);
             }
             return posicaoAtual;
         }
@@ -84,12 +86,13 @@ namespace _19169_19185_ED_Lab
                 {
                     dgv.Rows[i].Cells[j].Value = matriz[i, j]; // carrega cada linha e coluna do DataGridView de acordo com a matriz
                     /*if(matriz[i, j] == '#')
-                        dgv.Rows[i].Cells[j].Style.BackColor = Color.Gray; //Pinta as paredes
+                        dgv.Rows[i].Cells[j].Style.BackColor = Color.LightGray; //Pinta as paredes
                     if (matriz[i, j] == 'I')
                         dgv.Rows[i].Cells[j].Style.BackColor = Color.Green; //Pinta a posicao atual
                     if (matriz[i, j] == 'S')
                         dgv.Rows[i].Cells[j].Style.BackColor = Color.Goldenrod; //Pinta a saida*/
                 }
+            dgv.CurrentCell = dgv[1, 1];
                    
         }
 
@@ -99,7 +102,10 @@ namespace _19169_19185_ED_Lab
             int possivelLinha = possivelPosicao[0];
             int possivelColuna = possivelPosicao[1];
             if (matriz[possivelLinha, possivelColuna] == '#')
+            {
+                dgv.Rows[possivelLinha].Cells[possivelColuna].Style.BackColor = Color.LightGray;
                 return false;
+            }
             
             if(dgv.Rows[possivelLinha].Cells[possivelColuna].Style.BackColor == Color.LightGreen)               //verifica se já foi nesse espaço
                 return false;                                       //e retorna false
