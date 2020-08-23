@@ -72,7 +72,7 @@ namespace _19169_19185_ED_Lab
             while (matriz[posicaoAtual[0], posicaoAtual[1]] != 'S')
             {
                 posicaoAtual = procurarCaminho(posicaoAtual, dgv);
-                MessageBox.Show("foi");
+               // MessageBox.Show("foi");
             }
         }
 
@@ -83,12 +83,12 @@ namespace _19169_19185_ED_Lab
                 for (int j = 0; j < matriz.GetLength(1); j++)
                 {
                     dgv.Rows[i].Cells[j].Value = matriz[i, j]; // carrega cada linha e coluna do DataGridView de acordo com a matriz
-                    if(matriz[i, j] == '#')
+                    /*if(matriz[i, j] == '#')
                         dgv.Rows[i].Cells[j].Style.BackColor = Color.Gray; //Pinta as paredes
                     if (matriz[i, j] == 'I')
                         dgv.Rows[i].Cells[j].Style.BackColor = Color.Green; //Pinta a posicao atual
                     if (matriz[i, j] == 'S')
-                        dgv.Rows[i].Cells[j].Style.BackColor = Color.Goldenrod; //Pinta a saida
+                        dgv.Rows[i].Cells[j].Style.BackColor = Color.Goldenrod; //Pinta a saida*/
                 }
                    
         }

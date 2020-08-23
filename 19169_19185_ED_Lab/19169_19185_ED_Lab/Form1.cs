@@ -21,6 +21,7 @@ namespace _19169_19185_ED_Lab
         {            
             if(dlgArquivo.ShowDialog() == DialogResult.OK)
             {
+                labirinto = null;
                 labirinto = new Labirinto(dlgArquivo.FileName); // cria um novo labirinto
                 labirinto.Exibir(dgvLabirinto);
             }

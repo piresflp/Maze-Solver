@@ -53,7 +53,9 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Labirinto.cs" />
+    <Compile Include="ListaSimplesDesordenada.cs" />
     <Compile Include="Movimento.cs" />
+    <Compile Include="Pilha.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
