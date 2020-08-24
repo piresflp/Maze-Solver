@@ -48,6 +48,8 @@ namespace _19169_19185_ED_Lab
 
                 if(podeMover(dgv,possivelMovimento))
                 {
+                    //Thread.Sleep(50);
+                    //Application.DoEvents();
                     movimentos.Empilhar(new Movimento(posicaoAtual[0], posicaoAtual[1]));
                     dgv.Rows[posicaoAtual[0]].Cells[posicaoAtual[1]].Style.BackColor = Color.LightGreen; //Pinta a posicao anterior
                     posicaoAtual = possivelMovimento;
@@ -75,7 +77,7 @@ namespace _19169_19185_ED_Lab
             return posicaoAtual;
         }
 
-        public void andar(DataGridView dgv)
+        public void Andar(DataGridView dgv)
         {
             int[] posicaoAtual = { 1, 1 };
             while (matriz[posicaoAtual[0], posicaoAtual[1]] != 'S')
