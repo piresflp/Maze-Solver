@@ -49,6 +49,7 @@
             this.dgvLabirinto.Enabled = false;
             this.dgvLabirinto.Location = new System.Drawing.Point(12, 87);
             this.dgvLabirinto.Name = "dgvLabirinto";
+            this.dgvLabirinto.ReadOnly = true;
             this.dgvLabirinto.RowHeadersVisible = false;
             this.dgvLabirinto.Size = new System.Drawing.Size(502, 403);
             this.dgvLabirinto.TabIndex = 0;
@@ -56,11 +57,17 @@
             // 
             // dgvCaminhos
             // 
+            this.dgvCaminhos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvCaminhos.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvCaminhos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCaminhos.ColumnHeadersVisible = false;
+            this.dgvCaminhos.Enabled = false;
             this.dgvCaminhos.Location = new System.Drawing.Point(520, 87);
             this.dgvCaminhos.Name = "dgvCaminhos";
+            this.dgvCaminhos.ReadOnly = true;
+            this.dgvCaminhos.RowHeadersVisible = false;
             this.dgvCaminhos.Size = new System.Drawing.Size(523, 403);
-            this.dgvCaminhos.TabIndex = 1;
+            this.dgvCaminhos.TabIndex = 0;
             // 
             // lbLabirinto
             // 

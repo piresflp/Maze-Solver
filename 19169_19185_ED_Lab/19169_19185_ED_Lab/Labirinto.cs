@@ -14,6 +14,7 @@ namespace _19169_19185_ED_Lab
     {
         private char[,] matriz;
         PilhaLista<Movimento> movimentos;
+        int qtdSolucoes;
         public Labirinto(string arquivo)
         {
             lerArquivo(arquivo);
@@ -77,19 +78,52 @@ namespace _19169_19185_ED_Lab
             return posicaoAtual;
         }
 
-        public void Andar(DataGridView dgv)
+        public void Andar(DataGridView dgvLabirinto, DataGridView dgvCaminhos)
         {
             int[] posicaoAtual = { 1, 1 };
             while (matriz[posicaoAtual[0], posicaoAtual[1]] != 'S')
             {
-                posicaoAtual = procurarCaminho(posicaoAtual, dgv);
+                posicaoAtual = procurarCaminho(posicaoAtual, dgvLabirinto);
 
                 if (posicaoAtual[0] == 1 && posicaoAtual[1] == 1)
                     break;
-               // MessageBox.Show("foi");
+
+                if (matriz[posicaoAtual[0], posicaoAtual[1]] == 'S')
+                {
+                    MostrarSolucao(dgvCaminhos);
+                    qtdSolucoes++;
+                }
+                // MessageBox.Show("foi");
             }
         }
 
+        private void MostrarSolucao(DataGridView dgv)
+        {
+            definirDgv(dgv);
+            if (qtdSolucoes > 0)
+                aumentarDgv(dgv, matriz.GetLength(0) + 1);
+            for (int i = 0; i < matriz.GetLength(0); i++)
+                for (int j = 0; j < matriz.GetLength(1); j++)
+                {
+                    int linha = qtdSolucoes * matriz.GetLength(0) + qtdSolucoes + i;
+                    dgv.Rows[linha].Cells[j].Value = matriz[i, j]; // carrega cada linha e coluna do DataGridView de acordo com a matriz
+                    if (matriz[i, j] == 'S')
+                        dgv.Rows[linha].Cells[j].Style.BackColor = Color.Goldenrod; //Pinta a saida
+                }
+            PilhaLista<Movimento> copia = movimentos;
+            while (!copia.EstaVazia)
+            {
+                Movimento aux = copia.OTopo();
+                int linha = qtdSolucoes * matriz.GetLength(0) + qtdSolucoes + aux.Linha;
+                int coluna = aux.Coluna;
+                dgv.Rows[linha].Cells[coluna].Style.BackColor = Color.LightGreen;
+                copia.Desempilhar();
+            }
+        }
+        private void aumentarDgv(DataGridView dgv, int aumento)
+        {
+            dgv.RowCount += aumento; //Aumenta as linhas do DataGridView
+        }
         public void Exibir(DataGridView dgv)
         {
             dgv.Rows.Clear();

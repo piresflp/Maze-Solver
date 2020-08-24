@@ -34,7 +34,7 @@ namespace _19169_19185_ED_Lab
 
         private void btnEncontrar_Click(object sender, EventArgs e)
         {
-            labirinto.Andar(dgvLabirinto);
+            labirinto.Andar(dgvLabirinto, dgvCaminhos);
         }
     }
 }
