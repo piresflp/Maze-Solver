@@ -114,7 +114,7 @@ namespace _19169_19185_ED_Lab
                     if (matriz[i, j] == 'S')
                         dgv.Rows[linha].Cells[j].Style.BackColor = Color.Goldenrod; //Pinta a saida
                 }
-            PilhaLista<Movimento> copia = movimentos;
+            PilhaLista<Movimento> copia = (PilhaLista<Movimento>) movimentos.Clone();
             while (!copia.EstaVazia)
             {
                 Movimento aux = copia.OTopo();

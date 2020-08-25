@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using System.Threading;
 
 
-  class PilhaLista<Dado> : ListaSimples<Dado>, IStack<Dado>
+  class PilhaLista<Dado> : ListaSimples<Dado>, IStack<Dado>, ICloneable
                            where Dado : IComparable<Dado>
   {
     public Dado Desempilhar()
@@ -42,6 +42,10 @@ using System.Threading;
 
     public int Tamanho { get => base.QuantosNos; }
 
+    public object Clone()
+    {
+        return this.MemberwiseClone();
+    }
 
     public void Exibir(DataGridView dgv)
     {
