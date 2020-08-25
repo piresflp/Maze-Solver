@@ -14,7 +14,8 @@ namespace _19169_19185_ED_Lab
     {
         private char[,] matriz;
         PilhaLista<Movimento> movimentos;
-        int qtdSolucoes;
+        private int qtdSolucoes;
+        private PilhaLista<Movimento>[] solucoes = new PilhaLista<Movimento>[100];
         public Labirinto(string arquivo)
         {
             lerArquivo(arquivo);
@@ -48,7 +49,7 @@ namespace _19169_19185_ED_Lab
                 possivelColuna = posicaoAtual[1] + direcoes.Direcoes[i, 1];
                 int[] possivelMovimento = { possivelLinha, possivelColuna };
 
-                if(podeMover(dgv,possivelMovimento))
+                if(podeMover(dgv,possivelMovimento, posicaoAtual))
                 {
                     
                     movimentos.Empilhar(new Movimento(posicaoAtual[0], posicaoAtual[1]));
@@ -65,12 +66,17 @@ namespace _19169_19185_ED_Lab
             {
                 if (posicaoAtual[0] == 1 && posicaoAtual[1] == 1)
                 {
-                    MessageBox.Show("Labirinto sem solução", "Sem saída");
+                    if(qtdSolucoes == 0)
+                        MessageBox.Show("Labirinto sem solução", "Sem saída");
+                    else
+                    {
+                        MessageBox.Show("Labirinto solucianado com "+ qtdSolucoes+" soluções", "Finalizou");
+                    }
                 }
                 else
                 {
-                    dgv.Rows[posicaoAtual[0]].Cells[posicaoAtual[1]].Value = "#";
-                    dgv.Rows[posicaoAtual[0]].Cells[posicaoAtual[1]].Style.BackColor = Color.LightGray; //Pinta a posicao anterior
+                    /*dgv.Rows[posicaoAtual[0]].Cells[posicaoAtual[1]].Value = "#";
+                    dgv.Rows[posicaoAtual[0]].Cells[posicaoAtual[1]].Style.BackColor = Color.LightGray; //Pinta a posicao anterior*/
                     Movimento ultimoMovimento = movimentos.OTopo();
                     movimentos.Desempilhar();
                     posicaoAtual[0] = ultimoMovimento.Linha;
@@ -95,7 +101,13 @@ namespace _19169_19185_ED_Lab
                 if (matriz[posicaoAtual[0], posicaoAtual[1]] == 'S')
                 {
                     MostrarSolucao(dgvCaminhos);
-                    qtdSolucoes++;
+                    solucoes[qtdSolucoes] = (PilhaLista<Movimento>)movimentos.Clone();
+                    solucoes[qtdSolucoes].Empilhar(new Movimento(posicaoAtual[0], posicaoAtual[1]));
+                    qtdSolucoes+=1;
+                    Movimento aux = movimentos.OTopo();
+                    posicaoAtual[0] = aux.Linha;
+                    posicaoAtual[1] = aux.Coluna;
+                    movimentos.Desempilhar();
                 }
                 // MessageBox.Show("foi");
             }
@@ -103,8 +115,9 @@ namespace _19169_19185_ED_Lab
 
         private void MostrarSolucao(DataGridView dgv)
         {
-            definirDgv(dgv);
-            if (qtdSolucoes > 0)
+            if (qtdSolucoes == 0)
+                definirDgv(dgv);
+            else
                 aumentarDgv(dgv, matriz.GetLength(0) + 1);
             for (int i = 0; i < matriz.GetLength(0); i++)
                 for (int j = 0; j < matriz.GetLength(1); j++)
@@ -148,7 +161,7 @@ namespace _19169_19185_ED_Lab
         }
 
 
-        private bool podeMover(DataGridView dgv, int[] possivelPosicao)
+        private bool podeMover(DataGridView dgv, int[] possivelPosicao, int[] posicaoAtual)
         {
             int possivelLinha = possivelPosicao[0];
             int possivelColuna = possivelPosicao[1];
@@ -156,12 +169,72 @@ namespace _19169_19185_ED_Lab
             if (valorMatriz == "#")            
                 return false;
             
-            if (dgv.Rows[possivelLinha].Cells[possivelColuna].Style.BackColor == Color.LightGreen)//verifica se já foi nesse espaço
+            if (foi(possivelPosicao, posicaoAtual))                             //verifica se já foi nesse espaço
                 return false;                                      //e retorna false
              
             return true;
         }
 
+        private bool foi (int[] posicao, int[] posicaoAtual)
+        {
+
+            PilhaLista<Movimento> copia;
+            for (int i = 0; i < qtdSolucoes; i++)
+            {
+
+                PilhaLista<Movimento> aux = (PilhaLista<Movimento>)solucoes[i].Clone();
+                aux = inverso(aux);
+                copia = (PilhaLista<Movimento>)movimentos.Clone();
+                copia = inverso(copia);
+                Movimento movAux;
+                bool diferente = false;
+                while (!aux.EstaVazia && !copia.EstaVazia)
+                {
+                    Movimento mov = copia.OTopo();
+                    movAux = aux.OTopo();
+                    if (movAux.Linha != mov.Linha || movAux.Coluna != mov.Coluna)
+                    {
+                        diferente = true;
+                        break;
+                    }
+                    aux.Desempilhar();
+                    copia.Desempilhar();
+                }
+                if (!aux.EstaVazia && !diferente)
+                {
+                    movAux = aux.OTopo();
+                    if (movAux.Linha != posicaoAtual[0] && movAux.Coluna != posicaoAtual[1])
+                        return false;
+                    aux.Desempilhar();
+                }
+                if (!aux.EstaVazia && !diferente)
+                {
+                    movAux = aux.OTopo();
+                    if (movAux.Linha == posicao[0] && movAux.Coluna == posicao[1])
+                        return true;
+                }
+            }    
+            copia = (PilhaLista<Movimento>)movimentos.Clone();
+            while (!copia.EstaVazia)
+            {
+                Movimento movAux = copia.OTopo();
+                if (movAux.Linha == posicao[0] && movAux.Coluna == posicao[1])
+                    return true;
+                copia.Desempilhar();
+            }
+            
+            return false;
+        }
+        public PilhaLista<Movimento> inverso(PilhaLista<Movimento> pilha)
+        {
+            PilhaLista<Movimento> aux = new PilhaLista<Movimento>();
+            while (!pilha.EstaVazia)
+            {
+                aux.Empilhar(pilha.OTopo());
+                pilha.Desempilhar();
+            }
+            return aux;
+        }
         private void definirDgv( DataGridView dgv)
         {
             dgv.RowCount = matriz.GetLength(0); // define o número de linhas do DataGridView igual ao lido pela matriz
