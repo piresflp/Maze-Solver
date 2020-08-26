@@ -22,6 +22,9 @@ namespace _19169_19185_ED_Lab
             if(dlgArquivo.ShowDialog() == DialogResult.OK)
             {
                 labirinto = null;
+                dgvCaminhos.DataSource = null;
+                dgvCaminhos.Rows.Clear();
+                dgvCaminhos.Columns.Clear();
                 labirinto = new Labirinto(dlgArquivo.FileName); // cria um novo labirinto
                 labirinto.Exibir(dgvLabirinto);
             }
@@ -34,7 +37,11 @@ namespace _19169_19185_ED_Lab
 
         private void btnEncontrar_Click(object sender, EventArgs e)
         {
+            btnEncontrar.Enabled = false;
+            btnAbrir.Enabled = false;
             labirinto.Andar(dgvLabirinto, dgvCaminhos);
+            btnEncontrar.Enabled = true;
+            btnAbrir.Enabled = true;
         }
     }
 }

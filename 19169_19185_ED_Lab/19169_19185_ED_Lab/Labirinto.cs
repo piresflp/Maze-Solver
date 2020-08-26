@@ -70,13 +70,13 @@ namespace _19169_19185_ED_Lab
                         MessageBox.Show("Labirinto sem solução", "Sem saída");
                     else
                     {
-                        MessageBox.Show("Labirinto solucianado com "+ qtdSolucoes+" soluções", "Finalizou");
+                        MessageBox.Show("Labirinto solucionado com "+ qtdSolucoes+" possíveis soluções", "Finalizou");
                     }
                 }
                 else
                 {
-                    /*dgv.Rows[posicaoAtual[0]].Cells[posicaoAtual[1]].Value = "#";
-                    dgv.Rows[posicaoAtual[0]].Cells[posicaoAtual[1]].Style.BackColor = Color.LightGray; //Pinta a posicao anterior*/
+                    dgv.Rows[posicaoAtual[0]].Cells[posicaoAtual[1]].Value = "#";
+                    dgv.Rows[posicaoAtual[0]].Cells[posicaoAtual[1]].Style.BackColor = Color.LightGray; //Pinta a posicao anterior
                     Movimento ultimoMovimento = movimentos.OTopo();
                     movimentos.Desempilhar();
                     posicaoAtual[0] = ultimoMovimento.Linha;
@@ -103,7 +103,7 @@ namespace _19169_19185_ED_Lab
                     MostrarSolucao(dgvCaminhos);
                     solucoes[qtdSolucoes] = (PilhaLista<Movimento>)movimentos.Clone();
                     solucoes[qtdSolucoes].Empilhar(new Movimento(posicaoAtual[0], posicaoAtual[1]));
-                    qtdSolucoes+=1;
+                    qtdSolucoes++;
                     Movimento aux = movimentos.OTopo();
                     posicaoAtual[0] = aux.Linha;
                     posicaoAtual[1] = aux.Coluna;
