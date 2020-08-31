@@ -40,8 +40,15 @@ namespace _19169_19185_ED_Lab
             btnEncontrar.Enabled = false;
             btnAbrir.Enabled = false;
             labirinto.Andar(dgvLabirinto, dgvCaminhos);
+            labirinto.exibirResultados(dgvCaminhos);
             btnEncontrar.Enabled = true;
             btnAbrir.Enabled = true;
         }
+
+        private void dgvCaminhos_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            labirinto.carregarSolucao(e.RowIndex);
+        }
+        
     }
 }

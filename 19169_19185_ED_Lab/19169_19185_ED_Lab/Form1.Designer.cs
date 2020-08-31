@@ -57,17 +57,21 @@
             // 
             // dgvCaminhos
             // 
+            this.dgvCaminhos.AllowUserToAddRows = false;
+            this.dgvCaminhos.AllowUserToDeleteRows = false;
+            this.dgvCaminhos.AllowUserToResizeColumns = false;
+            this.dgvCaminhos.AllowUserToResizeRows = false;
             this.dgvCaminhos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvCaminhos.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvCaminhos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCaminhos.ColumnHeadersVisible = false;
-            this.dgvCaminhos.Enabled = false;
             this.dgvCaminhos.Location = new System.Drawing.Point(520, 87);
             this.dgvCaminhos.Name = "dgvCaminhos";
             this.dgvCaminhos.ReadOnly = true;
             this.dgvCaminhos.RowHeadersVisible = false;
             this.dgvCaminhos.Size = new System.Drawing.Size(523, 403);
             this.dgvCaminhos.TabIndex = 0;
+            this.dgvCaminhos.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCaminhos_CellClick);
             // 
             // lbLabirinto
             // 

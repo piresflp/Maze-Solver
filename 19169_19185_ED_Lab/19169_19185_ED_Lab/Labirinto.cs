@@ -100,7 +100,7 @@ namespace _19169_19185_ED_Lab
 
                 if (matriz[posicaoAtual[0], posicaoAtual[1]] == 'S')
                 {
-                    MostrarSolucao(dgvCaminhos);
+                    //MostrarSolucao(dgvCaminhos);
                     solucoes[qtdSolucoes] = (PilhaLista<Movimento>)movimentos.Clone();
                     solucoes[qtdSolucoes].Empilhar(new Movimento(posicaoAtual[0], posicaoAtual[1]));
                     qtdSolucoes++;
@@ -109,7 +109,6 @@ namespace _19169_19185_ED_Lab
                     posicaoAtual[1] = aux.Coluna;
                     movimentos.Desempilhar();
                 }
-                // MessageBox.Show("foi");
             }
         }
 
@@ -146,20 +145,24 @@ namespace _19169_19185_ED_Lab
             dgv.Rows.Clear();
             definirDgv(dgv);
             for (int i = 0; i < matriz.GetLength(0); i++) 
-                for (int j = 0; j < matriz.GetLength(1); j++)
-                {
+                for (int j = 0; j < matriz.GetLength(1); j++)                
                     dgv.Rows[i].Cells[j].Value = matriz[i, j]; // carrega cada linha e coluna do DataGridView de acordo com a matriz
-                    /*if(matriz[i, j] == '#')
-                        dgv.Rows[i].Cells[j].Style.BackColor = Color.LightGray; //Pinta as paredes
-                    if (matriz[i, j] == 'I')
-                        dgv.Rows[i].Cells[j].Style.BackColor = Color.Green; //Pinta a posicao atual
-                    if (matriz[i, j] == 'S')
-                        dgv.Rows[i].Cells[j].Style.BackColor = Color.Goldenrod; //Pinta a saida*/
-                }
             dgv.CurrentCell = dgv[1, 1];
                    
         }
 
+        public void exibirResultados(DataGridView dgv)
+        {
+            dgv.RowCount = qtdSolucoes;
+            dgv.CurrentCell = null;
+            foreach(DataGridViewRow linha in dgv.Rows)            
+                linha.Cells[0].Value = "Solução " + linha.Index+1;            
+        }
+
+        public void carregarSolucao(int index)
+        {
+            MessageBox.Show("clique!");            
+        }
 
         private bool podeMover(DataGridView dgv, int[] possivelPosicao, int[] posicaoAtual)
         {
