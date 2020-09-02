@@ -66,7 +66,6 @@ namespace _19169_19185_ED_Lab
                     }
 
                     moveu = true;
-                    Thread.Sleep(50);
                     Application.DoEvents();
                     break;                    
                 }
@@ -197,14 +196,8 @@ namespace _19169_19185_ED_Lab
             dgv.RowCount = qtdSolucoes;
             dgv.CurrentCell = null;
             foreach(DataGridViewRow linha in dgv.Rows)            
-                linha.Cells[0].Value = "Solução " + linha.Index+1;            
-        }
-
-        public void carregarSolucao(int index)
-        {
-            MessageBox.Show("clique!");            
-        }
-
+                linha.Cells[0].Value = "Solução " + (linha.Index+1);            
+        }        
         private bool podeMover(DataGridView dgv, int[] possivelPosicao, int[] posicaoAtual)
         {
             int possivelLinha = possivelPosicao[0];

@@ -43,6 +43,8 @@ namespace _19169_19185_ED_Lab
             labirinto.exibirResultados(dgvCaminhos);
             btnEncontrar.Enabled = true;
             btnAbrir.Enabled = true;
+            btnVoltar.Enabled = false;
+            btnVoltar.Visible = false;
         }
 
         private void dgvCaminhos_CellClick(object sender, DataGridViewCellEventArgs e)
