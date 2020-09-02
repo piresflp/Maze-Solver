@@ -38,7 +38,7 @@ namespace _19169_19185_ED_Lab
             }          
         }
 
-        private int[] procurarCaminho(int[] posicaoAtual, DataGridView dgv)
+        private int[] procurarCaminho(int[] posicaoAtual, DataGridView dgv, bool terminou)
         {
             Movimento direcoes = new Movimento();
             bool moveu = false;
@@ -51,11 +51,19 @@ namespace _19169_19185_ED_Lab
 
                 if(podeMover(dgv,possivelMovimento, posicaoAtual))
                 {
-                    
-                    movimentos.Empilhar(new Movimento(posicaoAtual[0], posicaoAtual[1]));
-                    dgv.Rows[posicaoAtual[0]].Cells[posicaoAtual[1]].Style.BackColor = Color.LightGreen; //Pinta a posicao anterior
-                    posicaoAtual = possivelMovimento;
-                    dgv.Rows[posicaoAtual[0]].Cells[posicaoAtual[1]].Style.BackColor = Color.Green; //Pinta a posicao atual
+                    if (!terminou)
+                    {
+                        movimentos.Empilhar(new Movimento(posicaoAtual[0], posicaoAtual[1]));
+                        dgv.Rows[posicaoAtual[0]].Cells[posicaoAtual[1]].Style.BackColor = Color.LightGreen; //Pinta a posicao anterior
+                        posicaoAtual = possivelMovimento;
+                        dgv.Rows[posicaoAtual[0]].Cells[posicaoAtual[1]].Style.BackColor = Color.Green; //Pinta a posicao atual
+                    }
+                    else
+                    {
+                        posicaoAtual = possivelMovimento;
+                        movimentos.Empilhar(new Movimento(posicaoAtual[0], posicaoAtual[1]));
+                    }
+
                     moveu = true;
                     Thread.Sleep(50);
                     Application.DoEvents();
@@ -75,13 +83,13 @@ namespace _19169_19185_ED_Lab
                 }
                 else
                 {
-                    dgv.Rows[posicaoAtual[0]].Cells[posicaoAtual[1]].Value = "#";
+                    //dgv.Rows[posicaoAtual[0]].Cells[posicaoAtual[1]].Value = "#";
                     dgv.Rows[posicaoAtual[0]].Cells[posicaoAtual[1]].Style.BackColor = Color.LightGray; //Pinta a posicao anterior
                     Movimento ultimoMovimento = movimentos.OTopo();
                     movimentos.Desempilhar();
                     posicaoAtual[0] = ultimoMovimento.Linha;
                     posicaoAtual[1] = ultimoMovimento.Coluna;
-                    procurarCaminho(posicaoAtual, dgv);
+                    procurarCaminho(posicaoAtual, dgv, terminou);
                     Application.DoEvents();
                 }
             }
@@ -91,10 +99,11 @@ namespace _19169_19185_ED_Lab
         public void Andar(DataGridView dgvLabirinto, DataGridView dgvCaminhos)
         {
             int[] posicaoAtual = { 1, 1 };
+            bool terminou = false;
             while (matriz[posicaoAtual[0], posicaoAtual[1]] != 'S')
             {
-                posicaoAtual = procurarCaminho(posicaoAtual, dgvLabirinto);
-
+                posicaoAtual = procurarCaminho(posicaoAtual, dgvLabirinto, terminou);
+                terminou = false;
                 if (posicaoAtual[0] == 1 && posicaoAtual[1] == 1)
                     break;
 
@@ -103,6 +112,7 @@ namespace _19169_19185_ED_Lab
                     //MostrarSolucao(dgvCaminhos);
                     solucoes[qtdSolucoes] = (PilhaLista<Movimento>)movimentos.Clone();
                     solucoes[qtdSolucoes].Empilhar(new Movimento(posicaoAtual[0], posicaoAtual[1]));
+                    terminou = true;
                     qtdSolucoes++;
                     Movimento aux = movimentos.OTopo();
                     posicaoAtual[0] = aux.Linha;
@@ -207,7 +217,7 @@ namespace _19169_19185_ED_Lab
                 {
                     movAux = aux.OTopo();
                     if (movAux.Linha != posicaoAtual[0] && movAux.Coluna != posicaoAtual[1])
-                        return false;
+                        diferente = true;
                     aux.Desempilhar();
                 }
                 if (!aux.EstaVazia && !diferente)
