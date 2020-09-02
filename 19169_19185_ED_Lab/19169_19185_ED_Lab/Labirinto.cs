@@ -122,29 +122,26 @@ namespace _19169_19185_ED_Lab
             }
         }
 
-        private void MostrarSolucao(DataGridView dgv)
+        public void MostrarSolucao(DataGridView dgv, int solucao)
         {
-            if (qtdSolucoes == 0)
-                definirDgv(dgv);
-            else
-                aumentarDgv(dgv, matriz.GetLength(0) + 1);
+            definirDgv(dgv);
             for (int i = 0; i < matriz.GetLength(0); i++)
                 for (int j = 0; j < matriz.GetLength(1); j++)
                 {
-                    int linha = qtdSolucoes * matriz.GetLength(0) + qtdSolucoes + i;
-                    dgv.Rows[linha].Cells[j].Value = matriz[i, j]; // carrega cada linha e coluna do DataGridView de acordo com a matriz
+                    dgv.Rows[i].Cells[j].Value = matriz[i, j]; // carrega cada linha e coluna do DataGridView de acordo com a matriz
                     if (matriz[i, j] == 'S')
-                        dgv.Rows[linha].Cells[j].Style.BackColor = Color.Goldenrod; //Pinta a saida
+                        dgv.Rows[i].Cells[j].Style.BackColor = Color.Goldenrod; //Pinta a saida
                 }
-            PilhaLista<Movimento> copia = (PilhaLista<Movimento>) movimentos.Clone();
+            PilhaLista<Movimento> copia = (PilhaLista<Movimento>) solucoes[solucao].Clone();
             while (!copia.EstaVazia)
             {
                 Movimento aux = copia.OTopo();
-                int linha = qtdSolucoes * matriz.GetLength(0) + qtdSolucoes + aux.Linha;
+                int linha = aux.Linha;
                 int coluna = aux.Coluna;
                 dgv.Rows[linha].Cells[coluna].Style.BackColor = Color.LightGreen;
                 copia.Desempilhar();
             }
+            dgv.Enabled = false;
         }
         private void aumentarDgv(DataGridView dgv, int aumento)
         {
@@ -163,6 +160,9 @@ namespace _19169_19185_ED_Lab
 
         public void exibirResultados(DataGridView dgv)
         {
+            dgv.Rows.Clear();
+            dgv.Columns.Clear();
+            dgv.Enabled = true;
             dgv.RowCount = qtdSolucoes;
             dgv.CurrentCell = null;
             foreach(DataGridViewRow linha in dgv.Rows)            

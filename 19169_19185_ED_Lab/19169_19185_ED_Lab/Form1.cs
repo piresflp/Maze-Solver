@@ -47,7 +47,7 @@ namespace _19169_19185_ED_Lab
 
         private void dgvCaminhos_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            labirinto.carregarSolucao(e.RowIndex);
+            labirinto.MostrarSolucao(dgvCaminhos,e.RowIndex);
         }
         
     }
