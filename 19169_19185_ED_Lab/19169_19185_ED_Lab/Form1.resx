@@ -123,10 +123,20 @@
   <metadata name="dlgArquivo.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnVoltar.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+        xAAADsQBlSsOGwAAABh0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC41ZYUyZQAAALNJREFUOE/l0bEJ
+        xCAUgGFHsMwADuNQQkZwBMdJaWHhGJYWFu94jyckpxHPXHX3gxKjfAQj4Mv9GFhKgRgjr/pNgQg550Ap
+        Bdu2Qc6Zd9qG4BkSQtDA5xACn2jrgncQvsO9URfwCVQjsAdVzBgD+75PDQLxgrXWF2h1EIgTotZa+oPn
+        A0tfSDPXg5fu8L0ncBes3cHeez7RNgRrZ1hKCSkl3mmbAmsIH8fBq34fgTP9HQjwAofkZYpLniEbAAAA
+        AElFTkSuQmCC
+</value>
+  </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>25</value>
   </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAEAgIAAAAEAIAAoCAEAFgAAACgAAACAAAAAAAEAAAEAIAAAAAAAAAABACJNAAAiTQAAAAAAAAAA

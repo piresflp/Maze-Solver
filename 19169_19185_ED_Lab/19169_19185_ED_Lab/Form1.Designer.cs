@@ -36,6 +36,7 @@
             this.btnEncontrar = new System.Windows.Forms.Button();
             this.btnAbrir = new System.Windows.Forms.Button();
             this.dlgArquivo = new System.Windows.Forms.OpenFileDialog();
+            this.btnVoltar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLabirinto)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCaminhos)).BeginInit();
             this.SuspendLayout();
@@ -119,11 +120,25 @@
             // 
             this.dlgArquivo.FileName = "openFileDialog1";
             // 
+            // btnVoltar
+            // 
+            this.btnVoltar.Enabled = false;
+            this.btnVoltar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnVoltar.Image = ((System.Drawing.Image)(resources.GetObject("btnVoltar.Image")));
+            this.btnVoltar.Location = new System.Drawing.Point(688, 64);
+            this.btnVoltar.Name = "btnVoltar";
+            this.btnVoltar.Size = new System.Drawing.Size(28, 23);
+            this.btnVoltar.TabIndex = 7;
+            this.btnVoltar.UseVisualStyleBackColor = true;
+            this.btnVoltar.Visible = false;
+            this.btnVoltar.Click += new System.EventHandler(this.btnVoltar_Click);
+            // 
             // frmForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1055, 500);
+            this.Controls.Add(this.btnVoltar);
             this.Controls.Add(this.btnAbrir);
             this.Controls.Add(this.btnEncontrar);
             this.Controls.Add(this.lbCaminhos);
@@ -149,6 +164,7 @@
         private System.Windows.Forms.Button btnEncontrar;
         private System.Windows.Forms.Button btnAbrir;
         private System.Windows.Forms.OpenFileDialog dlgArquivo;
+        private System.Windows.Forms.Button btnVoltar;
     }
 }
 
