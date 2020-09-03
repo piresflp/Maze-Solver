@@ -66,6 +66,7 @@ namespace _19169_19185_ED_Lab
                     }
 
                     moveu = true;
+                    Thread.Sleep(50);
                     Application.DoEvents();
                     break;                    
                 }
@@ -87,6 +88,8 @@ namespace _19169_19185_ED_Lab
                     dgv.Rows[posicaoAtual[0]].Cells[posicaoAtual[1]].Style.BackColor = Color.LightGray; //Pinta a posicao anterior
                     Movimento ultimoMovimento = movimentos.OTopo();
                     movimentos.Desempilhar();
+                    ultimaTentativa[0] = posicaoAtual[0];
+                    ultimaTentativa[1] = posicaoAtual[1];
                     posicaoAtual[0] = ultimoMovimento.Linha;
                     posicaoAtual[1] = ultimoMovimento.Coluna;
                     int[] aux = procurarCaminho(posicaoAtual, dgv, terminou);
