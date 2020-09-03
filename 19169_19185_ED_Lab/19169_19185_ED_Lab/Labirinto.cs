@@ -66,7 +66,7 @@ namespace _19169_19185_ED_Lab
                     }
 
                     moveu = true;
-                    Thread.Sleep(50);
+                    Thread.Sleep(0);
                     Application.DoEvents();
                     break;                    
                 }
