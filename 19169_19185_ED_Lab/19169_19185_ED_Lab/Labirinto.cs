@@ -64,10 +64,7 @@ namespace _19169_19185_ED_Lab
                         posicaoAtual = possivelMovimento;
                         movimentos.Empilhar(new Movimento(posicaoAtual[0], posicaoAtual[1]));
                     }
-
                     moveu = true;
-                    Thread.Sleep(0);
-                    Application.DoEvents();
                     break;                    
                 }
             }
@@ -100,7 +97,6 @@ namespace _19169_19185_ED_Lab
                         if (posicaoAtual[0] == copia.Linha && posicaoAtual[1] == copia.Coluna)
                             posicaoAtual = aux;
                     }
-                    Application.DoEvents();
                 }
             }
             return posicaoAtual;
@@ -143,6 +139,7 @@ namespace _19169_19185_ED_Lab
                 if (matriz[posicaoAtual[0], posicaoAtual[1]] == 'S')
                 {
                     //MostrarSolucao(dgvCaminhos);
+
                     solucoes[qtdSolucoes] = (PilhaLista<Movimento>)movimentos.Clone();
                     solucoes[qtdSolucoes].Empilhar(new Movimento(posicaoAtual[0], posicaoAtual[1]));
                     terminou = true;
@@ -157,6 +154,7 @@ namespace _19169_19185_ED_Lab
 
         public void MostrarSolucao(DataGridView dgv, int solucao)
         {
+            limparDgv(dgv);
             definirDgv(dgv);
             for (int i = 0; i < matriz.GetLength(0); i++)
                 for (int j = 0; j < matriz.GetLength(1); j++)
@@ -176,10 +174,7 @@ namespace _19169_19185_ED_Lab
             }
             dgv.Enabled = false;
         }
-        private void aumentarDgv(DataGridView dgv, int aumento)
-        {
-            dgv.RowCount += aumento; //Aumenta as linhas do DataGridView
-        }
+        
         public void Exibir(DataGridView dgv)
         {
             dgv.Rows.Clear();
@@ -190,14 +185,11 @@ namespace _19169_19185_ED_Lab
             dgv.CurrentCell = dgv[1, 1];
                    
         }
-
         public void exibirResultados(DataGridView dgv)
         {
-            dgv.Rows.Clear();
-            dgv.Columns.Clear();
+            limparDgv(dgv);
             dgv.Enabled = true;
             dgv.RowCount = qtdSolucoes;
-            dgv.CurrentCell = null;
             foreach(DataGridViewRow linha in dgv.Rows)            
                 linha.Cells[0].Value = "Solução " + (linha.Index+1);            
         }        
@@ -222,7 +214,6 @@ namespace _19169_19185_ED_Lab
             PilhaLista<Movimento> copia;
             for (int i = 0; i < qtdSolucoes; i++)
             {
-
                 PilhaLista<Movimento> aux = (PilhaLista<Movimento>)solucoes[i].Clone();
                 aux = inverso(aux);
                 copia = (PilhaLista<Movimento>)movimentos.Clone();
@@ -230,7 +221,7 @@ namespace _19169_19185_ED_Lab
                 Movimento movAux;
                 bool diferente = false;
                 while (!aux.EstaVazia && !copia.EstaVazia)
-                {
+                {                    
                     Movimento mov = copia.OTopo();
                     movAux = aux.OTopo();
                     if (movAux.Linha != mov.Linha || movAux.Coluna != mov.Coluna)
@@ -253,7 +244,7 @@ namespace _19169_19185_ED_Lab
                     movAux = aux.OTopo();
                     if (movAux.Linha == posicao[0] && movAux.Coluna == posicao[1])
                         return true;
-                }
+                }                
             }    
             copia = (PilhaLista<Movimento>)movimentos.Clone();
             while (!copia.EstaVazia)
@@ -262,8 +253,7 @@ namespace _19169_19185_ED_Lab
                 if (movAux.Linha == posicao[0] && movAux.Coluna == posicao[1])
                     return true;
                 copia.Desempilhar();
-            }
-            
+            }            
             return false;
         }
         public PilhaLista<Movimento> inverso(PilhaLista<Movimento> pilha)
@@ -276,14 +266,18 @@ namespace _19169_19185_ED_Lab
             }
             return aux;
         }
-        private void definirDgv( DataGridView dgv)
+        private void definirDgv(DataGridView dgv)
         {
             dgv.RowCount = matriz.GetLength(0); // define o número de linhas do DataGridView igual ao lido pela matriz
             dgv.ColumnCount = matriz.GetLength(1); // define o número de colunas do DataGridView igual ao lido pela matriz
-          /*  int dgvLargura = dgv.Columns.GetColumnsWidth(DataGridViewElementStates.Visible);
-            int dgvAltura = dgv.Rows.GetRowsHeight(DataGridViewElementStates.Visible);
-            dgv.Width = dgvLargura + 147;
-            dgv.Height = dgvAltura + 47;*/
+        }
+
+        private void limparDgv(DataGridView dgv)
+        {
+            dgv.CurrentCell = null;
+            dgv.DataSource = null;
+            dgv.Rows.Clear();
+            dgv.Columns.Clear();
         }
     }
 }

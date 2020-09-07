@@ -28,12 +28,7 @@ namespace _19169_19185_ED_Lab
                 labirinto = new Labirinto(dlgArquivo.FileName); // cria um novo labirinto
                 labirinto.Exibir(dgvLabirinto);
             }
-        }
-
-        private void dgvLabirinto_Resize(object sender, EventArgs e)
-        {
-            
-        }
+        }       
 
         private void btnEncontrar_Click(object sender, EventArgs e)
         {
@@ -43,22 +38,11 @@ namespace _19169_19185_ED_Lab
             labirinto.exibirResultados(dgvCaminhos);
             btnEncontrar.Enabled = true;
             btnAbrir.Enabled = true;
-            btnVoltar.Enabled = false;
-            btnVoltar.Visible = false;
         }
 
         private void dgvCaminhos_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            labirinto.MostrarSolucao(dgvCaminhos,e.RowIndex);
-            btnVoltar.Enabled = true;
-            btnVoltar.Visible = true;
-        }
-
-        private void btnVoltar_Click(object sender, EventArgs e)
-        {
-            labirinto.exibirResultados(dgvCaminhos);
-            btnVoltar.Enabled = false;
-            btnVoltar.Visible = false;
-        }
+            labirinto.MostrarSolucao(dgvLabirinto, e.RowIndex);        
+        }        
     }
 }
