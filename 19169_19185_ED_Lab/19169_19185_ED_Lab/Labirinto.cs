@@ -12,11 +12,14 @@ namespace _19169_19185_ED_Lab
 {
     class Labirinto
     {
-        private char[,] matriz;
-        PilhaLista<Movimento> movimentos;
-        private int qtdSolucoes;
-        private PilhaLista<Movimento>[] solucoes = new PilhaLista<Movimento>[100];
-        private int[] ultimaTentativa = { 0, 0 };
+        private char[,] matriz; //cria a matriz
+        PilhaLista<Movimento> movimentos; //cria a pilha que vai guardar os movimentos feitos
+        private int qtdSolucoes; //cria um contador de soluções
+        private int qtdErros; //cria um contador de erros
+        private PilhaLista<Movimento>[] solucoes = new PilhaLista<Movimento>[100]; //cria um vetor de pilhas que vai guardar as soluções
+        private Movimento[] erros = new Movimento[100]; //cria um vetor de pilhas que vai guardar os caminhos errados
+        private int[] ultimaTentativa = { 0, 0 }; //cria uma variavel que armazena o ultimo movimento realizado
+        private bool voltando = false;
         public Labirinto(string arquivo)
         {
             lerArquivo(arquivo);
@@ -38,6 +41,35 @@ namespace _19169_19185_ED_Lab
                     matriz[i, j] = linhaLida[j]; // salva os dados lidos na matriz
             }          
         }
+        public void Andar(DataGridView dgvLabirinto, DataGridView dgvCaminhos)
+        {
+            int[] posicaoAtual = { 1, 1 }; //define a posição atual como inicio
+            bool terminou = false; //cria um bool para saber se terminou o labirinto
+            while (matriz[posicaoAtual[0], posicaoAtual[1]] != 'S')
+            {
+                posicaoAtual = procurarCaminho(posicaoAtual, dgvLabirinto, terminou); //anda um espaço
+                terminou = false; //marca que não terminou
+                ultimaTentativa[0] = posicaoAtual[0];//atualiza a ultima tentativa
+                ultimaTentativa[1] = posicaoAtual[1];
+                if (posicaoAtual[0] == 1 && posicaoAtual[1] == 1) //para o programa se voltou ao começo
+                    break; 
+
+                if (matriz[posicaoAtual[0], posicaoAtual[1]] == 'S') //verifica se esta na saida
+                {
+                    if (qtdSolucoes == solucoes.Length) //aumenta o vetor caso esteja no limite
+                        aumentar(0);
+                    solucoes[qtdSolucoes] = (PilhaLista<Movimento>)movimentos.Clone(); //adiciona o movimento a lista de solucoes
+                    solucoes[qtdSolucoes].Empilhar(new Movimento(posicaoAtual[0], posicaoAtual[1])); //adiciona a saida a ultima solucao
+                    terminou = true;//marca que terminou
+                    voltando = true;
+                    qtdSolucoes++; //aumenta o contador de solucoes
+                    Movimento aux = movimentos.OTopo();
+                    posicaoAtual[0] = aux.Linha;
+                    posicaoAtual[1] = aux.Coluna;
+                    movimentos.Desempilhar(); //volta um movimento
+                }
+            }
+        }
 
         private int[] procurarCaminho(int[] posicaoAtual, DataGridView dgv, bool terminou)
         {
@@ -46,49 +78,59 @@ namespace _19169_19185_ED_Lab
             int possivelLinha = 0, possivelColuna = 0;
             for(int i = 0; i < direcoes.Direcoes.Length/2; i++)
             {
-                possivelLinha = posicaoAtual[0] + direcoes.Direcoes[i, 0];
+                possivelLinha = posicaoAtual[0] + direcoes.Direcoes[i, 0]; 
                 possivelColuna = posicaoAtual[1] + direcoes.Direcoes[i, 1];
-                int[] possivelMovimento = { possivelLinha, possivelColuna };
+                int[] possivelMovimento = { possivelLinha, possivelColuna }; //define um possivel movimento
 
-                if(podeMover(dgv,possivelMovimento, posicaoAtual))
+                if (podeMover(dgv,possivelMovimento, posicaoAtual)) //verifica se esse movimento e valido
                 {
-                    if (!inverte(possivelMovimento, terminou))
+                    if (!inverte(possivelMovimento, terminou)) //verifica se precisa inveter a ordem entre andar e empilhar
                     {
-                        movimentos.Empilhar(new Movimento(posicaoAtual[0], posicaoAtual[1]));
+                        movimentos.Empilhar(new Movimento(posicaoAtual[0], posicaoAtual[1])); //empilha a posicao atual
                         dgv.Rows[posicaoAtual[0]].Cells[posicaoAtual[1]].Style.BackColor = Color.LightGreen; //Pinta a posicao anterior
-                        posicaoAtual = possivelMovimento;
+                        posicaoAtual = possivelMovimento; //atualiza a posicao atual
                         dgv.Rows[posicaoAtual[0]].Cells[posicaoAtual[1]].Style.BackColor = Color.Green; //Pinta a posicao atual
                     }
                     else
                     {
-                        posicaoAtual = possivelMovimento;
-                        movimentos.Empilhar(new Movimento(posicaoAtual[0], posicaoAtual[1]));
+                        posicaoAtual = possivelMovimento; //atualiza a posicao atual
+                        movimentos.Empilhar(new Movimento(posicaoAtual[0], posicaoAtual[1])); //empilha a posicao atual
                     }
-                    moveu = true;
+                    moveu = true; //indica que andou
+                    voltando = false;
                     break;                    
                 }
             }
-            if (!moveu)
+            if (!moveu) //verifica se  nao andou
             {
-                if (posicaoAtual[0] == 1 && posicaoAtual[1] == 1)
+                if (posicaoAtual[0] == 1 && posicaoAtual[1] == 1) //verifica se esta no inicio
                 {
-                    if(qtdSolucoes == 0)
-                        MessageBox.Show("Labirinto sem solução", "Sem saída");
+                    if(qtdSolucoes == 0) //verifica se ja foi resolvido
+                        MessageBox.Show("Labirinto sem solução", "Sem saída"); //avisa que nao tem saida
                     else
                     {
-                        MessageBox.Show("Labirinto solucionado com "+ qtdSolucoes+" possíveis soluções", "Finalizou");
+                        MessageBox.Show("Labirinto solucionado com "+ qtdSolucoes+" possíveis soluções", "Finalizou"); //avisa que acabou
                     }
                 }
                 else
                 {
                     //dgv.Rows[posicaoAtual[0]].Cells[posicaoAtual[1]].Value = "#";
                     dgv.Rows[posicaoAtual[0]].Cells[posicaoAtual[1]].Style.BackColor = Color.LightGray; //Pinta a posicao anterior
+                    
                     Movimento ultimoMovimento = movimentos.OTopo();
                     movimentos.Desempilhar();
                     ultimaTentativa[0] = posicaoAtual[0];
                     ultimaTentativa[1] = posicaoAtual[1];
                     posicaoAtual[0] = ultimoMovimento.Linha;
                     posicaoAtual[1] = ultimoMovimento.Coluna;
+                    if (!voltando && !usou(ultimaTentativa, posicaoAtual))
+                    {
+                        if (qtdErros == erros.Length) //aumenta o vetor caso esteja no limite
+                            aumentar(1);
+                        erros[qtdErros] = new Movimento(ultimaTentativa[0], ultimaTentativa[1]); //adiciona o movimento a lista de erros
+                        qtdErros++;
+                    }
+                    voltando = true;
                     int[] aux = procurarCaminho(posicaoAtual, dgv, terminou);
 
                     if (!movimentos.EstaVazia)
@@ -101,6 +143,88 @@ namespace _19169_19185_ED_Lab
             }
             return posicaoAtual;
         }
+
+        private bool podeMover(DataGridView dgv, int[] possivelPosicao, int[] posicaoAtual)
+        {
+            int possivelLinha = possivelPosicao[0];
+            int possivelColuna = possivelPosicao[1];
+            var valorMatriz = dgv.Rows[possivelPosicao[0]].Cells[possivelPosicao[1]].Value.ToString();
+            if (valorMatriz == "#") //verifica se e uma parede
+                return false;
+
+            if (ultimaTentativa[0] == possivelPosicao[0] && ultimaTentativa[1] == possivelPosicao[1]) //verifica se quer repetir a tentativa anterior
+                return false;
+            if (foi(possivelPosicao, posicaoAtual))                             //verifica se já foi nesse espaço
+                return false;                                      
+
+            return true;
+        }
+
+        private bool foi(int[] posicao, int[] posicaoAtual)
+        {
+            PilhaLista<Movimento> copia;
+            for (int i = 0; i < qtdSolucoes; i++)
+            {
+                PilhaLista<Movimento> aux = (PilhaLista<Movimento>)solucoes[i].Clone();
+                aux = inverso(aux); //deixa a pilha indo da posicao inicial ate o fim
+                copia = (PilhaLista<Movimento>)movimentos.Clone();
+                copia = inverso(copia); //deixa a pilha indo da posicao inicial ate o fim
+                Movimento movAux;
+                bool diferente = false;
+                while (!aux.EstaVazia && !copia.EstaVazia)
+                {
+                    Movimento mov = copia.OTopo();
+                    movAux = aux.OTopo();
+                    if (movAux.Linha != mov.Linha || movAux.Coluna != mov.Coluna)
+                    {
+                        diferente = true;
+                        break;
+                    }
+                    aux.Desempilhar();
+                    copia.Desempilhar();
+                }
+                if (!aux.EstaVazia && !diferente)
+                {
+                    movAux = aux.OTopo();
+                    if (movAux.Linha != posicaoAtual[0] && movAux.Coluna != posicaoAtual[1])
+                        diferente = true;
+                    aux.Desempilhar();
+                }
+                if (!aux.EstaVazia && !diferente)
+                {
+                    movAux = aux.OTopo();
+                    if (movAux.Linha == posicao[0] && movAux.Coluna == posicao[1]) //verifica se esse caminho ja foi feito
+                        return true;
+                }
+            }
+            copia = (PilhaLista<Movimento>)movimentos.Clone();
+            while (!copia.EstaVazia)
+            {
+                Movimento movAux = copia.OTopo();
+                if (movAux.Linha == posicao[0] && movAux.Coluna == posicao[1]) //verifica se ja foi nesse lugar
+                    return true;
+                copia.Desempilhar();
+            }
+            for (int i = 0; i < qtdErros; i++)
+            {
+                if (erros[i].Linha == posicao[0] && erros[i].Coluna == posicao[1]) //verifica se esse caminho ja foi feito
+                    return true;
+                
+            }
+            return false;
+        }
+
+        public PilhaLista<Movimento> inverso(PilhaLista<Movimento> pilha)
+        {
+            PilhaLista<Movimento> aux = new PilhaLista<Movimento>();
+            while (!pilha.EstaVazia)
+            {
+                aux.Empilhar(pilha.OTopo());
+                pilha.Desempilhar();
+            }
+            return aux;
+        }
+
         public bool inverte(int[] possivelMovimento, bool terminou)
         {
             bool tem = false;
@@ -122,33 +246,64 @@ namespace _19169_19185_ED_Lab
             }
             return tem;
         }
-
-        public void Andar(DataGridView dgvLabirinto, DataGridView dgvCaminhos)
+        
+        private bool usou(int[] posicao, int[] posicaoAtual)
         {
-            int[] posicaoAtual = { 1, 1 };
-            bool terminou = false;
-            while (matriz[posicaoAtual[0], posicaoAtual[1]] != 'S')
+            if (posicaoAtual[0] == posicao[0] && posicaoAtual[1] == posicao[1]) //verifica se esta na posicao
+                return true;
+            PilhaLista<Movimento> copia;
+            copia = (PilhaLista<Movimento>)movimentos.Clone();
+            while (!copia.EstaVazia)
             {
-                posicaoAtual = procurarCaminho(posicaoAtual, dgvLabirinto, terminou);
-                terminou = false;
-                ultimaTentativa[0] = posicaoAtual[0];
-                ultimaTentativa[1] = posicaoAtual[1];
-                if (posicaoAtual[0] == 1 && posicaoAtual[1] == 1)
-                    break;
+                Movimento movAux = copia.OTopo();
+                if (movAux.Linha == posicao[0] && movAux.Coluna == posicao[1]) //verifica se ja foi nesse lugar
+                    return true;
+                copia.Desempilhar();
+            }
+            for (int i = 0; i < qtdErros; i++)
+            {
+                if (erros[i].Linha == posicao[0] && erros[i].Coluna == posicao[1]) //verifica se ja foi nesse lugar
+                    return true;
 
-                if (matriz[posicaoAtual[0], posicaoAtual[1]] == 'S')
+            }
+            for (int i = 0; i < qtdSolucoes; i++)
+            {
+                PilhaLista<Movimento> aux = (PilhaLista<Movimento>)solucoes[i].Clone();
+                Movimento movAux;
+                while (!aux.EstaVazia)
                 {
-                    //MostrarSolucao(dgvCaminhos);
-
-                    solucoes[qtdSolucoes] = (PilhaLista<Movimento>)movimentos.Clone();
-                    solucoes[qtdSolucoes].Empilhar(new Movimento(posicaoAtual[0], posicaoAtual[1]));
-                    terminou = true;
-                    qtdSolucoes++;
-                    Movimento aux = movimentos.OTopo();
-                    posicaoAtual[0] = aux.Linha;
-                    posicaoAtual[1] = aux.Coluna;
-                    movimentos.Desempilhar();
+                    movAux = aux.OTopo();
+                    if (movAux.Linha == posicao[0] && movAux.Coluna == posicao[1])
+                    {
+                        return true;
+                    }
+                    aux.Desempilhar();
                 }
+            }
+            return false;
+        }
+
+        private void aumentar(int caso)
+        {
+            if(caso == 0)
+            {
+                int aumento = solucoes.Length + 100;
+                PilhaLista<Movimento>[] a = new PilhaLista<Movimento>[aumento];
+                for (int i = 0; i < solucoes.Length; i++)
+                {
+                    a[i] = solucoes[i];
+                }
+                solucoes = a;
+            }
+            else
+            {
+                int aumento = erros.Length + 100;
+                Movimento[] a = new Movimento[aumento];
+                for (int i = 0; i < erros.Length; i++)
+                {
+                    a[i] = erros[i];
+                }
+                erros = a;
             }
         }
 
@@ -193,79 +348,8 @@ namespace _19169_19185_ED_Lab
             foreach(DataGridViewRow linha in dgv.Rows)            
                 linha.Cells[0].Value = "Solução " + (linha.Index+1);            
         }        
-        private bool podeMover(DataGridView dgv, int[] possivelPosicao, int[] posicaoAtual)
-        {
-            int possivelLinha = possivelPosicao[0];
-            int possivelColuna = possivelPosicao[1];
-            var valorMatriz = dgv.Rows[possivelPosicao[0]].Cells[possivelPosicao[1]].Value.ToString();
-            if (valorMatriz == "#")            
-                return false;
-            
-            if (foi(possivelPosicao, posicaoAtual))                             //verifica se já foi nesse espaço
-                return false;                                      //e retorna false
-             
-            return true;
-        }
+        
 
-        private bool foi (int[] posicao, int[] posicaoAtual)
-        {
-            if (ultimaTentativa[0] == posicao[0] && ultimaTentativa[1] == posicao[1])
-                return true;
-            PilhaLista<Movimento> copia;
-            for (int i = 0; i < qtdSolucoes; i++)
-            {
-                PilhaLista<Movimento> aux = (PilhaLista<Movimento>)solucoes[i].Clone();
-                aux = inverso(aux);
-                copia = (PilhaLista<Movimento>)movimentos.Clone();
-                copia = inverso(copia);
-                Movimento movAux;
-                bool diferente = false;
-                while (!aux.EstaVazia && !copia.EstaVazia)
-                {                    
-                    Movimento mov = copia.OTopo();
-                    movAux = aux.OTopo();
-                    if (movAux.Linha != mov.Linha || movAux.Coluna != mov.Coluna)
-                    {
-                        diferente = true;
-                        break;
-                    }
-                    aux.Desempilhar();
-                    copia.Desempilhar();
-                }
-                if (!aux.EstaVazia && !diferente)
-                {
-                    movAux = aux.OTopo();
-                    if (movAux.Linha != posicaoAtual[0] && movAux.Coluna != posicaoAtual[1])
-                        diferente = true;
-                    aux.Desempilhar();
-                }
-                if (!aux.EstaVazia && !diferente)
-                {
-                    movAux = aux.OTopo();
-                    if (movAux.Linha == posicao[0] && movAux.Coluna == posicao[1])
-                        return true;
-                }                
-            }    
-            copia = (PilhaLista<Movimento>)movimentos.Clone();
-            while (!copia.EstaVazia)
-            {
-                Movimento movAux = copia.OTopo();
-                if (movAux.Linha == posicao[0] && movAux.Coluna == posicao[1])
-                    return true;
-                copia.Desempilhar();
-            }            
-            return false;
-        }
-        public PilhaLista<Movimento> inverso(PilhaLista<Movimento> pilha)
-        {
-            PilhaLista<Movimento> aux = new PilhaLista<Movimento>();
-            while (!pilha.EstaVazia)
-            {
-                aux.Empilhar(pilha.OTopo());
-                pilha.Desempilhar();
-            }
-            return aux;
-        }
         private void definirDgv(DataGridView dgv)
         {
             dgv.RowCount = matriz.GetLength(0); // define o número de linhas do DataGridView igual ao lido pela matriz
